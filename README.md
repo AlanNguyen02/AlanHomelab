@@ -1,6 +1,5 @@
 # AlanHomelab
-Hands-on homelab documenting virtualization, networking, Linux administration, troubleshooting, and system administration.
-# IT Homelab
+# Homelab
 
 Hands-on IT homelab documenting my experience with virtualization, networking, Linux administration, troubleshooting, and system administration.
 
