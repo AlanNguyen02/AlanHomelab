@@ -17,8 +17,10 @@ sudo ss -tlnp | grep -E ':22|:2222'
 ```
 
 Initial Result:
+```
 1. LISTEN 0 4096 0.0.0.0:22 0.0.0.0:* users:(("sshd",...))
 2. LISTEN 0 4096 [::]:22 [::]:* users:(("sshd",...))
+```
 
 ## Investigation
 1. I changed the SSH configuration in: /etc/ssh/sshd_config from #Port 22 to Port 2222
@@ -44,3 +46,34 @@ ListenStream=[::]:2222
 LISTEN 0 4096 0.0.0.0:2222 0.0.0.0:* users:(("sshd",...))
 LISTEN 0 4096 [::]:2222 [::]:* users:(("sshd",...))
 ```
+5. Port 22 was no longer listening
+
+## Verification
+1. From a Windows PC, I established a new SSH connection using "ssh -p 2222 "VM""
+2. Connection succeeded
+3. Confirms that SSH was moved from TCP port 22 to TCP port 2222
+
+## What I Learned
+1. SSH normally uses TCP port 22
+2. A service can be running without necessarily listening on the port I expect
+3. ss can be used to determine which ports are listening
+4. systemctl can be used to inspect services and sockets
+5. Modern Ubuntu can use systemd socket activation for SSH
+6. sshd_config and the systemd SSH socket can interact when determining the listening port
+7. Configuration changes should be verified rather than assumed to taken effect
+8. Keeping an existing SSH session open while changing the SSH port prevents accidentally locking myself out before the new connection is tested.
+
+## Troubleshooting Method
+The general troubleshooting process was:
+
+1. Check whether the SSH service is running.
+2. Check which port is actually listening.
+3. Inspect the relevant configuration.
+4. Identify which component controls the listening socket.
+5. Apply the configuration change.
+6. Reload/restart the appropriate component.
+7. Verify the listening port.
+8. Test the connection from the client.
+
+## Result
+SSH was successfully reconfigured from TCP port 22 to TCP port 2222, and remote access was verified from a Windows client.
