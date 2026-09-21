@@ -16,9 +16,9 @@ I verified the listening socket with:
 sudo ss -tlnp | grep -E ':22|:2222'
 ```
 
-Initial Result
-LISTEN 0 4096 0.0.0.0:22 0.0.0.0:* users:(("sshd",...))
-LISTEN 0 4096 [::]:22 [::]:* users:(("sshd",...))
+Initial Result:
+1. LISTEN 0 4096 0.0.0.0:22 0.0.0.0:* users:(("sshd",...))
+2. LISTEN 0 4096 [::]:22 [::]:* users:(("sshd",...))
 
 ##Investigation
 1. I changed the SSH configuration in:
