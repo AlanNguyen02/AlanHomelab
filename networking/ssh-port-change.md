@@ -14,6 +14,7 @@ I verified the listening socket with:
 
 ```bash
 sudo ss -tlnp | grep -E ':22|:2222'
+```
 
 Initial Result
 LISTEN 0 4096 0.0.0.0:22 0.0.0.0:* users:(("sshd",...))
